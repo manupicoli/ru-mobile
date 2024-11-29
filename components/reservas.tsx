@@ -1,5 +1,5 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
+import { useRouter } from 'expo-router';
 import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 
@@ -8,18 +8,22 @@ export enum mealTime {
     DINNER = 'Janta',
 }
 
-export default function ReservationForm() {
+export const ReservationForm: React.FC = () => {
   const [date, setDate] = useState('');
   const [meal, setMeal] = useState('');
+  const route = useRouter();
 
   const handleSubmit = async () => {
-    const userId = AsyncStorage.getItem('userId');
-
     try{
-        const response = await axios.post(`https://ru-api-production.up.railway.app/webmob/reservation/${userId}`, {
+        const response = await axios.post(`https://ru-api-production.up.railway.app/webmob/reservation/6`, {
             reservationDate: new Date(date),
             mealTime: meal
         });
+
+        if(response.data){
+            console.log('Reserva feita com sucesso', response.data);
+            route.push('/');
+        }
     } catch (error) {
         console.log('Erro ao fazer reserva', error);
     }

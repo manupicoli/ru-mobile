@@ -1,10 +1,8 @@
-import ReservationForm from "@/components/reservas";
-import { useNavigation } from "expo-router";
+import {ReservationForm} from "@/components/reservas";
 import React from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 
 export default function ReservasScreen(){
-    const navigation = useNavigation();
 
     return (
         <View>
